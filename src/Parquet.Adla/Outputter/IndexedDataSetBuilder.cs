@@ -100,6 +100,7 @@ namespace Parquet.Adla.Outputter
             {
                var f = (DataField)_schema.Fields[i];
                rgWriter.WriteColumn(new DataColumn(f, _ds[i].ToArray()));
+               _ds[i].Clear();
             }
          }
          _rowGroupCount++;
@@ -134,8 +135,8 @@ namespace Parquet.Adla.Outputter
          }
          _schema = new Schema(fields);
 
-         //Use better compression to keep the file size under 1GB
-         _writer = new ParquetWriter(_schema, targetStream) { CompressionMethod = CompressionMethod.Gzip };
+         //Use snappy compression to cut down the ADLA hours consumed
+         _writer = new ParquetWriter(_schema, targetStream) { CompressionMethod = CompressionMethod.Snappy };
       }
 
       //private Row ToRow(IRow row)
