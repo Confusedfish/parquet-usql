@@ -57,7 +57,7 @@ function MergeDll{
     $tmp = New-Item -Path $outDir -ItemType Directory
 
     $MergeAssemblies = @(
-		"Parquet*.dll"
+		"Parquet*.dll", "System.Buffers*.dll"
 		)
 
     $ilMergePaths = $MergeAssemblies | ForEach-Object { "$srcDir\$_" }

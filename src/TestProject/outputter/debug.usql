@@ -1,4 +1,7 @@
-﻿REFERENCE ASSEMBLY [Parquet];
+﻿USE master;
+
+REFERENCE ASSEMBLY [System.Buffers];
+REFERENCE ASSEMBLY [Parquet];
 REFERENCE ASSEMBLY [Parquet.Adla];
 
 @a  = 
@@ -11,7 +14,10 @@ REFERENCE ASSEMBLY [Parquet.Adla];
 
         ) AS 
               D( customer, amount, date, nulls);
-OUTPUT @a
-    TO "/test1.parquet"
+
+@b = SELECT * FROM @a ORDER BY customer, date OFFSET 0 ROWS;
+
+OUTPUT @b
+    TO "/test2.parquet"
     USING new Parquet.Adla.Outputter.ParquetOutputter();
 
